@@ -1,0 +1,122 @@
+<?php 
+include_once 'C:\Games\Labirint\exceptions.php';
+include "checker.php";
+
+
+class MazeManager {
+    public static int $height = 0;
+    public static int $width;
+    public static $maze;
+
+    static function getMaze(string $filename) {
+        $fp = fopen($filename, 'r');
+
+        $height = 0;
+        $width = 0;
+        $maze = array();
+    
+    
+        if (!$fp) {
+            throw new FileException("Ошибка при открытии файла $filename");
+            
+        }
+        else {
+            
+            $check_width = 0;
+            $is_first = true;
+            while (($line = fgets($fp, 4096)) !== false) {
+                
+                $line = trim($line);
+    
+                $demo_maze = str_split($line);
+                $demo_maze_counter = 0;
+                $len = strlen($line);
+                for ($i = 0; $i < $len; $i++) {
+                    if ($line[$i] == " ") continue;
+                    if (is_numeric($line[$i])) {
+                        $demo_maze[$demo_maze_counter] = $line[$i];
+                        $demo_maze_counter++;
+                        $width++;
+                    } else {
+                        throw new IncorrectInputFormatException("A line can only contain numbers and spaces");
+                    }
+                }
+    
+                
+    
+                if ($is_first) {
+                    $check_width = $width;
+                    $is_fisrt = false;
+                } else {
+                    if ($check_width != $width) {
+                        throw new IncorrectInputFormatException("Unequal number of characters in rows.");
+                    }
+                }
+                $width = 0;
+                $maze[$height] = $demo_maze;
+                $height++;
+    
+            }
+    
+            
+        }
+    
+        fclose($fp);
+
+        self::$height = $height;
+        self::$width = $check_width;
+        self::$maze = $maze;
+    
+        return $maze;
+    }
+
+
+    static function get_coordinate (string $coord_name, int $limit) {
+        $valid = true;
+
+        while($valid) {
+            $coord = readline("$coord_name = ");
+            if (ctype_digit(strval($coord))) {
+                if ($coord >= 0 && $coord < $limit) {
+                    $valid = false;
+                } else {
+                    print_err("$coord_name must be greater than or equal to 0 and less than or equal to $limit");
+                    continue;
+                }
+                
+            } else {
+                print_err("$coord_name must be an integer!");
+                continue;
+            }
+        }
+        return $coord;
+    }
+
+
+
+    static function print_maze() {
+        echo "    ";
+        for ($i = 0; $i < MazeManager::$height; $i++) {
+            echo $i, " ";
+        }
+        echo "\n  --";
+        for ($i = 0; $i < MazeManager::$height; $i++) {
+            echo "--";
+        }
+        echo "\n";
+        
+        for ($i = 0; $i < MazeManager::$height; $i++) {
+            echo $i, " | ";
+            for ($j = 0; $j < MazeManager::$width; $j++) {
+                echo self::$maze[$i][$j], " ";
+            }
+            echo "\n";
+        }
+    }
+
+}
+
+
+
+
+?>
