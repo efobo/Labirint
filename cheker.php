@@ -15,9 +15,7 @@ function checkNumberFormat($char):bool {
 
 
 
-function incorrectInputFormat(string $err) {
-    print_err("Incorrect input format! ".$err);
-}
+
 
 
 

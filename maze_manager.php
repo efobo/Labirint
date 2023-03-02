@@ -1,5 +1,5 @@
-<?php 
-include_once 'C:\Games\Labirint\exceptions.php';
+<?php
+include 'exceptions.php';
 include "checker.php";
 
 
@@ -92,9 +92,24 @@ class MazeManager {
         return $coord;
     }
 
+    static function make_zero_maze (int $cur_x, int $cur_y) {
+        $zero_maze = array();
+
+        for ($i = 0; $i < MazeManager::$height; $i++) {
+            $demo_maze = array();
+            for ($j = 0; $j < MazeManager::$width; $j++) {
+                if ($i == $cur_y && $j == $cur_x) {
+                    $demo_maze[$j] = 1;
+                } else $demo_maze[$j] = 0;
+            }
+            $zero_maze[$i] = $demo_maze;
+        }
+        return $zero_maze;
+    }
 
 
-    static function print_maze() {
+
+    static function print_maze(): void {
         echo "    ";
         for ($i = 0; $i < MazeManager::$height; $i++) {
             echo $i, " ";
