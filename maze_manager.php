@@ -1,6 +1,6 @@
 <?php
-include 'exceptions.php';
-include "checker.php";
+include_once 'exceptions.php';
+
 
 
 class MazeManager {
@@ -17,7 +17,7 @@ class MazeManager {
     
     
         if (!$fp) {
-            throw new FileException("Ошибка при открытии файла $filename");
+            fileException("Error opening the $filename file");
             
         }
         else {
@@ -38,7 +38,8 @@ class MazeManager {
                         $demo_maze_counter++;
                         $width++;
                     } else {
-                        throw new IncorrectInputFormatException("A line can only contain numbers and spaces");
+                        incorrectInputFormatException("A line can only contain numbers and spaces");
+                        return -1;
                     }
                 }
     
@@ -49,7 +50,8 @@ class MazeManager {
                     $is_fisrt = false;
                 } else {
                     if ($check_width != $width) {
-                        throw new IncorrectInputFormatException("Unequal number of characters in rows.");
+                        incorrectInputFormatException("Unequal number of characters in rows.");
+                        return -1;
                     }
                 }
                 $width = 0;
@@ -80,12 +82,12 @@ class MazeManager {
                 if ($coord >= 0 && $coord < $limit) {
                     $valid = false;
                 } else {
-                    print_err("$coord_name must be greater than or equal to 0 and less than or equal to $limit");
+                    print_error("$coord_name must be greater than or equal to 0 and less than or equal to $limit");
                     continue;
                 }
                 
             } else {
-                print_err("$coord_name must be an integer!");
+                print_error("$coord_name must be an integer!");
                 continue;
             }
         }

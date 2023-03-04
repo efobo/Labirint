@@ -1,7 +1,17 @@
 <?php
 
-class IncorrectInputFormatException extends Exception {};
+function print_error(string $str) {
+    echo "ERROR: ", $str, "\n";
+}
 
-class FileException extends Exception {};
+function incorrectInputFormatException (string $str) {
+    print_error("Incorrect Input Format Exception! ", $str, "\n");
+}
+
+function fileException (string $str) {
+    print_error("File Exception! ", $str, "\n");
+}
+
+
 
 ?>
