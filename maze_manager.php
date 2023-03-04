@@ -73,6 +73,7 @@ class MazeManager {
     }
 
 
+
     static function get_coordinate (string $coord_name, int $limit) {
         $valid = true;
 
@@ -90,6 +91,7 @@ class MazeManager {
                 print_error("$coord_name must be an integer!");
                 continue;
             }
+            
         }
         return $coord;
     }
@@ -113,11 +115,11 @@ class MazeManager {
 
     static function print_maze(): void {
         echo "    ";
-        for ($i = 0; $i < MazeManager::$height; $i++) {
+        for ($i = 0; $i < MazeManager::$width; $i++) {
             echo $i, " ";
         }
         echo "\n  --";
-        for ($i = 0; $i < MazeManager::$height; $i++) {
+        for ($i = 0; $i < MazeManager::$width; $i++) {
             echo "--";
         }
         echo "\n";
@@ -126,6 +128,16 @@ class MazeManager {
             echo $i, " | ";
             for ($j = 0; $j < MazeManager::$width; $j++) {
                 echo self::$maze[$i][$j], " ";
+            }
+            echo "\n";
+        }
+    }
+
+    static function print_array($arr): void {
+
+        for ($i =0; $i < count($arr); $i++) {
+            for ($j = 0; $j < count($arr[$i]); $j++) {
+                echo $arr[$i][$j], " ";
             }
             echo "\n";
         }
